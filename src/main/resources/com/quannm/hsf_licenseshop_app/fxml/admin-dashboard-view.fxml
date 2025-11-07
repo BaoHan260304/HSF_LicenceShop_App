@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -11,4 +12,5 @@
         </font>
     </Label>
     <Label text="Đây là khu vực quản lý của Admin." />
+    <Button onAction="#handleManageUsers" prefWidth="200.0" text="Quản Lý Người Dùng" />
 </VBox>
