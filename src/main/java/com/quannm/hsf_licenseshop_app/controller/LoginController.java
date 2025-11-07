@@ -60,8 +60,8 @@ public class LoginController {
                         userController.setUserData(user);
                         break;
                     case SELLER:
-                        // TODO: Tạo màn hình cho Seller
-                        errorMessageLabel.setText("Chức năng cho Seller đang được phát triển.");
+                        SellerDashboardController sellerController = SceneManager.switchScene("seller-dashboard-view.fxml", "Seller Dashboard");
+                        sellerController.setUserData(user);
                         break;
                 }
             } catch (IOException e) {

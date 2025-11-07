@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quannm.hsf_licenseshop_app.controller.SellerDashboardController">
+    <Label fx:id="welcomeLabel" text="Welcome, Seller!">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+    <Label text="Đây là khu vực quản lý của Người Bán." />
+    <HBox alignment="CENTER" spacing="10">
+        <Button onAction="#handleManageProducts" prefWidth="200.0" text="Quản Lý Sản Phẩm" />
+        <Button onAction="#handleCreateTestKey" prefWidth="200.0" text="Tạo Key Test Nhanh" />
+        <Button fx:id="copyKeyButton" onAction="#handleCopyTestKey" prefWidth="150.0" text="Copy Key Vừa Tạo" disable="true" />
+    </HBox>
+</VBox>

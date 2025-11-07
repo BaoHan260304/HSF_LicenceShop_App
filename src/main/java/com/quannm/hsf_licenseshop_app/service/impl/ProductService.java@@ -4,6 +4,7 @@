@@ -1,0 +1,74 @@
+package com.quannm.hsf_licenseshop_app.service.impl;
+
+import com.quannm.hsf_licenseshop_app.entity.Product;
+import com.quannm.hsf_licenseshop_app.dao.ProductDAO;
+import com.quannm.hsf_licenseshop_app.dao.ShopDAO;
+import com.quannm.hsf_licenseshop_app.entity.Product;
+import com.quannm.hsf_licenseshop_app.entity.Shop;
+import com.quannm.hsf_licenseshop_app.entity.User;
+import com.quannm.hsf_licenseshop_app.model.ProductFX;
+import com.quannm.hsf_licenseshop_app.service.ILicenseService;
+import com.quannm.hsf_licenseshop_app.service.IProductService;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+public class ProductService implements IProductService {
+
+    private final ProductDAO productDAO;
+    private final ShopDAO shopDAO;
+    private final ILicenseService licenseService;
+
+    public ProductService() {
+        this.productDAO = new ProductDAO();
+        this.shopDAO = new ShopDAO();
+        this.licenseService = new LicenseService(); // Khởi tạo LicenseService
+    }
+
+    @Override
+    public List<ProductFX> findBySeller(User seller) {
+        Optional<Shop> shopOptional = shopDAO.findByUserId(seller.getId());
+
+        return shopOptional.map(shop -> productDAO.findByShopId(shop.getId()).stream()
+                .map(ProductFX::new)
+                .collect(Collectors.toList())).orElse(Collections.emptyList());
+    }
+
+    @Override
+    public List<Warehouse> createProductAndLicenses(Product newProduct, int licenseQuantity, User seller) {
+        // 1. Tìm cửa hàng của người bán
+        Optional<Shop> shopOptional = shopDAO.findByUserId(seller.getId());
+        
+        Shop sellerShop;
+        // 2. Nếu không tìm thấy cửa hàng, TỰ ĐỘNG TẠO MỘT CỬA HÀNG MẶC ĐỊNH
+        sellerShop = shopOptional.orElseGet(() -> {
+            Shop newShop = Shop.builder()
+                    .userId(seller.getId())
+                    .shopName("Cửa hàng của " + seller.getUsername())
+                    .cccd("000000000000") // Thêm giá trị mặc định
+                    .bankAccountId(1L) // Giả sử tài khoản ngân hàng mặc định có ID là 1
+                    .createdAt(Instant.now()) // Sửa thành Instant.now() để khớp với kiểu dữ liệu của Shop
+                    .status(Shop.Status.ACTIVE) // Giữ nguyên
+                    .build();
+            return shopDAO.save(newShop); // Lưu cửa hàng mới và trả về
+        });
+
+        // 3. Hoàn thiện thông tin sản phẩm với thông tin cửa hàng
+        newProduct.setShop(sellerShop);
+        newProduct.setShopId(sellerShop.getId());
+
+        // 4. Lưu sản phẩm mới để lấy ID
+        Product savedProduct = productDAO.save(newProduct);
+
+        // 5. Dùng sản phẩm vừa lưu để tạo license
+        return licenseService.generateLicenses(savedProduct, licenseQuantity, seller);
+    }
+
+    @Override
+    public Optional<Product> findById(long id) {
+        return productDAO.findById(id);
+    }
+}

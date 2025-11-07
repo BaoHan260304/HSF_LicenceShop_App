@@ -44,8 +44,12 @@ public class UserDashboardController {
         ILicenseService.ActivationResult result = licenseService.activateLicense(licenseKey, currentUser);
 
         switch (result) {
-            case SUCCESS:
-                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Chúc mừng! Bạn đã kích hoạt license thành công.");
+            case SUCCESS_BASIC:
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng nhập tài khoản Basic thành công!");
+                licenseField.clear(); // Xóa trường nhập liệu sau khi thành công
+                break;
+            case SUCCESS_PREMIUM:
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng nhập tài khoản Premium thành công!");
                 licenseField.clear(); // Xóa trường nhập liệu sau khi thành công
                 break;
             case NOT_FOUND:

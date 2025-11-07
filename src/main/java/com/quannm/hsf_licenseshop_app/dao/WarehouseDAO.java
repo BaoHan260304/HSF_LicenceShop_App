@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public class WarehouseDAO {
@@ -35,6 +36,30 @@ public class WarehouseDAO {
             // Rollback transaction if it's active
             // if (em.getTransaction().isActive()) { em.getTransaction().rollback(); }
             throw e;
+        }
+    }
+
+    public void saveAll(List<Warehouse> warehouses) {
+        EntityManager em = HibernateUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            for (int i = 0; i < warehouses.size(); i++) {
+                em.persist(warehouses.get(i));
+                // Cứ mỗi 50 bản ghi thì flush một lần để giải phóng bộ nhớ
+                if (i > 0 && i % 50 == 0) {
+                    em.flush();
+                    em.clear();
+                }
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
         }
     }
 }
