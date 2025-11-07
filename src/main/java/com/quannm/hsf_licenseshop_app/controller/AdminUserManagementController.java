@@ -38,6 +38,8 @@ public class AdminUserManagementController implements Initializable {
     private Button deactivateButton;
     @FXML
     private Button setSellerButton;
+    @FXML
+    private Button viewHistoryButton;
     private final IUserService userService;
 
     public AdminUserManagementController() {
@@ -60,6 +62,7 @@ public class AdminUserManagementController implements Initializable {
             boolean isUserSelected = newSelection != null;
             deactivateButton.setDisable(!isUserSelected);
             setSellerButton.setDisable(!isUserSelected);
+            viewHistoryButton.setDisable(!isUserSelected);
         });
 
         loadUsers();
@@ -69,6 +72,12 @@ public class AdminUserManagementController implements Initializable {
         // Tải dữ liệu từ service và hiển thị lên TableView
         List<UserFX> userList = userService.findAll();
         userTableView.setItems(FXCollections.observableArrayList(userList));
+    }
+    
+    @FXML
+    private void handleReload() {
+        loadUsers();
+        showAlert(Alert.AlertType.INFORMATION, "Thông báo", "Đã tải lại danh sách người dùng.");
     }
 
     @FXML
@@ -132,6 +141,22 @@ public class AdminUserManagementController implements Initializable {
             } else {
                 showAlert(Alert.AlertType.ERROR, "Thất bại", "Có lỗi xảy ra, không thể cập nhật vai trò người dùng.");
             }
+        }
+    }
+
+    @FXML
+    private void handleViewHistory() {
+        UserFX selectedUser = userTableView.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            showAlert(Alert.AlertType.WARNING, "Chưa chọn người dùng", "Vui lòng chọn một người dùng để xem lịch sử.");
+            return;
+        }
+
+        try {
+            AdminUserHistoryController controller = SceneManager.switchScene("admin-user-history-view.fxml", "Lịch sử mua hàng");
+            controller.loadUserHistory(selectedUser);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -188,8 +188,8 @@ public class UserFX {
         user.setProvider(this.getProvider());
         user.setProviderId(this.getProviderId());
         user.setAvatarData(this.getAvatarData());
-        user.setCreatedAt(this.getCreatedAt()); // Thường được quản lý bởi DB/Service
-        user.setUpdatedAt(this.getUpdatedAt()); // Thường được quản lý bởi DB/Service
+        user.setCreatedAt(this.getCreatedAt());
+        user.setUpdatedAt(this.getUpdatedAt());
         return user;
     }
 }

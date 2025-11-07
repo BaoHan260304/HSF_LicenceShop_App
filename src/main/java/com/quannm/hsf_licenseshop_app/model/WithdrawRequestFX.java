@@ -129,7 +129,7 @@ public class WithdrawRequestFX {
         request.setBankAccountName(this.getBankAccountName());
         request.setBankName(this.getBankName());
         request.setNote(this.getNote());
-        request.setCreatedAt(this.getCreatedAt()); // Thường được quản lý bởi DB/Service
+        request.setCreatedAt(this.getCreatedAt());
         // shop entity sẽ được set bởi service layer nếu cần
         return request;
     }

@@ -11,6 +11,9 @@ public class HelloApplication extends Application {
         try {
             // Giao Stage chính cho SceneManager quản lý
             SceneManager.setPrimaryStage(stage);
+            // Cài đặt để cửa sổ không thể thay đổi kích thước
+            stage.setResizable(true);
+
             // Hiển thị màn hình đăng nhập đầu tiên
             SceneManager.showLoginScreen();
             stage.show();

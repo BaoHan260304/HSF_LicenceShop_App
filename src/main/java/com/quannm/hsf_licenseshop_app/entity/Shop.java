@@ -14,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Shop extends BaseEntity {
+public class Shop{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -33,6 +33,16 @@ public class Shop extends BaseEntity {
 
     @Column(name = "description", columnDefinition = "TEXT")
     String description;
+
+    @Column(name = "created_at", nullable = false)
+    Instant createdAt;
+
+    @Column(name = "updated_at")
+    Instant updatedAt;
+
+    @Column(name = "is_delete", nullable = false)
+    @Builder.Default
+    Boolean isDelete = false;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

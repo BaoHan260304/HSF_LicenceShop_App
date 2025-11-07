@@ -14,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Stall extends BaseEntity {
+public class Stall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -60,6 +60,12 @@ public class Stall extends BaseEntity {
 
     @Column(name = "approved_by")
     Long approvedBy;
+
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
+
+    @Column(name = "is_delete", nullable = false)
+    private boolean isDelete = false;
 
     @Transient
     @Builder.Default

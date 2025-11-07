@@ -169,22 +169,6 @@ public class ProductFX {
         return stallName;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt.get();
-    }
-
-    public ObjectProperty<LocalDateTime> createdAtProperty() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt.get();
-    }
-
-    public ObjectProperty<LocalDateTime> updatedAtProperty() {
-        return updatedAt;
-    }
-
     /**
      * Chuyển đổi ProductFX thành Product entity.
      *
@@ -202,8 +186,8 @@ public class ProductFX {
         product.setStatus(this.getStatus());
         product.setType(this.getType());
         product.setUniqueKey(this.getUniqueKey());
-        product.setCreatedAt(this.getCreatedAt()); // Thường được quản lý bởi DB/Service
-        product.setUpdatedAt(this.getUpdatedAt()); // Thường được quản lý bởi DB/Service
+        product.setCreatedAt(this.createdAt.get());
+        product.setUpdatedAt(this.updatedAt.get());
         // shop và stall entity sẽ được set bởi service layer nếu cần
         return product;
     }

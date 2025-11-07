@@ -32,8 +32,10 @@
         </TableView>
         <HBox alignment="CENTER" spacing="10.0">
             <children>
-                <Button fx:id="deactivateButton" onAction="#handleDeactivateUser" text="Vô hiệu hóa" disable="true" />
+                <Button fx:id="deactivateButton" onAction="#handleDeactivateUser" text="On/Off" disable="true" />
                 <Button fx:id="setSellerButton" onAction="#handleSetAsSeller" text="Đặt làm Seller" disable="true" />
+                <Button fx:id="viewHistoryButton" onAction="#handleViewHistory" text="Xem Lịch Sử" disable="true" />
+                <Button onAction="#handleReload" text="Tải lại" />
                 <Button onAction="#handleBackButton" text="Quay về" />
             </children>
         </HBox>
