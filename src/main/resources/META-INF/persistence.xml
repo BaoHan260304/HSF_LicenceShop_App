@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="HSF_LicenseShopPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Liệt kê các lớp Entity cần thiết cho App -->
+        <!-- Chúng ta sẽ thêm dần các entity khác vào đây khi cần -->
+        <class>com.quannm.hsf_licenseshop_app.entity.BaseEntity</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.User</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.Product</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.Order</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.OrderItem</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.Warehouse</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.Shop</class>
+        <class>com.quannm.hsf_licenseshop_app.entity.Stall</class>
+
+
+        <properties>
+            <!-- Cấu hình kết nối MySQL -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/license_shop"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="1234"/>
+
+            <!-- Cấu hình Hibernate -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
