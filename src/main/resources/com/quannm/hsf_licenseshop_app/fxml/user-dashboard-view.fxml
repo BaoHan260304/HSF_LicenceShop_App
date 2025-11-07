@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.quannm.hsf_licenseshop_app.controller.UserDashboardController">
+    <Label fx:id="welcomeLabel" text="Welcome, User!">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+    <Label text="Nhập mã license của bạn để kích hoạt:" />
+    <TextField fx:id="licenseField" maxWidth="300.0" promptText="XXXX-XXXX-XXXX-XXXX" />
+    <Button onAction="#handleActivateLicense" text="Kích hoạt" />
+</VBox>

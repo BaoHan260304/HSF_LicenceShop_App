@@ -1,19 +1,32 @@
 module com.quannm.hsf_licenseshop_app {
+    // Key test
+    // TEST-APP-2025-HSF-001
+
     requires javafx.controls;
     requires javafx.fxml;
 
     requires com.dlsc.formsfx;
 
-    // Dependencies cho Hibernate
+    // Dependencies cho Hibernate and JPA
     requires org.hibernate.orm.core;
     requires jakarta.persistence;
-    requires java.naming; // Required by Hibernate
+    requires java.sql;
+
+    // MySQL Driver
+    requires mysql.connector.j;
 
     // Dependency cho Lombok
     requires static lombok;
 
-    // Dependency cho BCrypt
+    // Spring dependencies
     requires spring.security.crypto;
+    requires spring.security.core;
+    requires spring.data.jpa;
+    requires spring.data.commons;
+    requires spring.context; // Cần cho Auditing
+    requires spring.beans; // Cần cho Auditing
+    requires org.aspectj.weaver; // Cần cho Auditing
+    requires spring.aop; // Cần cho Auditing
 
     // Dependency cho commons-logging (cần cho spring-security-crypto)
     requires org.apache.commons.logging;
@@ -24,10 +37,7 @@ module com.quannm.hsf_licenseshop_app {
 
     // Mở các package để JavaFX và Hibernate có thể truy cập
     // Mở package controller chính
-    opens com.quannm.hsf_licenseshop_app.controller to javafx.fxml;
-    // Mở các package controller con (RẤT QUAN TRỌNG)
-    opens com.quannm.hsf_licenseshop_app.controller.admin to javafx.fxml;
-    opens com.quannm.hsf_licenseshop_app.controller.customer to javafx.fxml;
+    opens com.quannm.hsf_licenseshop_app.controller to javafx.fxml; // Mở package controller cho FXML
     exports com.quannm.hsf_licenseshop_app.controller;
 
 

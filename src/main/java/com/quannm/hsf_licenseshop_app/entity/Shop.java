@@ -14,7 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Shop {
+public class Shop extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -39,20 +39,8 @@ public class Shop {
     @Builder.Default
     Status status = Status.ACTIVE;
 
-    @Column(name = "created_at", nullable = false)
-    Instant createdAt;
-
-    @Column(name = "updated_at")
-    Instant updatedAt;
-
-    @Column(name = "is_delete", nullable = false)
-    @Builder.Default
-    Boolean isDelete = false;
-
     public enum Status {
         ACTIVE, INACTIVE
     }
 
 }
-
-

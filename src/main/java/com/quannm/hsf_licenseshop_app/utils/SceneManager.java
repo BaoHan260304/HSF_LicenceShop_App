@@ -12,6 +12,7 @@ import java.io.IOException;
 public class SceneManager {
 
     private static Stage primaryStage;
+    private static User currentUser; // Biến static để lưu người dùng hiện tại
 
     public static void setPrimaryStage(Stage stage) {
         primaryStage = stage;
@@ -41,8 +42,11 @@ public class SceneManager {
         switchScene("login-view.fxml", "HSF License Shop - Đăng nhập");
     }
 
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
     public static User getCurrentUser() {
-        // TODO: Implement a session manager to get the current user
-        return null;
+        return currentUser;
     }
 }

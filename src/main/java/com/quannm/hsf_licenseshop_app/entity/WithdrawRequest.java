@@ -1,0 +1,57 @@
+package com.quannm.hsf_licenseshop_app.entity;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+
+import java.math.BigDecimal;
+@Getter
+@Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "withdrawrequest")
+public class WithdrawRequest extends BaseEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    
+    @Column(name = "shop_id", nullable = false)
+    Long shopId;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id", insertable = false, updatable = false)
+    Shop shop;
+    
+    @Column(name = "amount", nullable = false, precision = 15, scale = 2)
+    BigDecimal amount;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    @Builder.Default
+    Status status = Status.PENDING;
+    
+    @Column(name = "bank_account_number", nullable = false, length = 50)
+    String bankAccountNumber;
+    
+    @Column(name = "bank_account_name", nullable = false, length = 100)
+    String bankAccountName;
+    
+    @Column(name = "bank_name", nullable = false, length = 100)
+    String bankName;
+    
+    @Column(name = "note", length = 255)
+    String note;
+    
+    public enum Status {
+        PENDING, APPROVED, REJECTED, CANCELLED
+    }
+}

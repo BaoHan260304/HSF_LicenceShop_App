@@ -11,26 +11,31 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class) // Vô hiệu hóa Auditing
 @Getter
 @Setter
 public abstract class BaseEntity {
     
-    @Column(name = "isDelete", nullable = false)
+    @Transient // Bỏ qua trường này, không ánh xạ vào DB
+    @Column(name = "is_delete", nullable = false)
     private Boolean isDelete = false;
     
-    @CreatedBy
-    @Column(name = "createdBy", length = 50)
+    //@CreatedBy
+    @Transient // Bỏ qua trường này, không ánh xạ vào DB
+    @Column(name = "created_by", length = 50)
     private String createdBy;
     
-    @CreatedDate
-    @Column(name = "createdAt", nullable = false, updatable = false)
+    //@CreatedDate
+    @Transient // Bỏ qua trường này, không ánh xạ vào DB
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     
-    @LastModifiedDate
-    @Column(name = "updatedAt")
+    //@LastModifiedDate
+    @Transient // Bỏ qua trường này, không ánh xạ vào DB
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    @Column(name = "deletedBy", length = 50)
+    @Transient // Bỏ qua trường này, không ánh xạ vào DB
+    @Column(name = "deleted_by", length = 50)
     private String deletedBy;
 }

@@ -3,12 +3,14 @@ package com.quannm.hsf_licenseshop_app.controller;
 import com.quannm.hsf_licenseshop_app.entity.User;
 import com.quannm.hsf_licenseshop_app.service.IUserService;
 import com.quannm.hsf_licenseshop_app.service.impl.UserService;
+import com.quannm.hsf_licenseshop_app.utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class LoginController {
@@ -43,15 +45,29 @@ public class LoginController {
 
         if (loggedInUser.isPresent()) {
             User user = loggedInUser.get();
-            errorMessageLabel.setText("Đăng nhập thành công! Chào mừng " + user.getFullName() + " (" + user.getRole() + ")");
-            // TODO: Chuyển sang màn hình chính của ứng dụng dựa trên vai trò của người dùng
-            System.out.println("User logged in: " + user.getUsername() + " with role: " + user.getRole());
-            // Ví dụ: Load một màn hình khác
-            // Parent root = FXMLLoader.load(getClass().getResource("/com/quannm/hsf_licenseshop_app/fxml/main-app-view.fxml"));
-            // Scene scene = new Scene(root);
-            // Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            // stage.setScene(scene);
-            // stage.show();
+            // Lưu người dùng hiện tại vào "session"
+            SceneManager.setCurrentUser(user);
+
+            // Đăng nhập thành công, chuyển màn hình dựa trên vai trò
+            try {
+                switch (user.getRole()) {
+                    case ADMIN:
+                        AdminDashboardController adminController = SceneManager.switchScene("admin-dashboard-view.fxml", "Admin Dashboard");
+                        adminController.setUserData(user);
+                        break;
+                    case USER:
+                        UserDashboardController userController = SceneManager.switchScene("user-dashboard-view.fxml", "User Dashboard");
+                        userController.setUserData(user);
+                        break;
+                    case SELLER:
+                        // TODO: Tạo màn hình cho Seller
+                        errorMessageLabel.setText("Chức năng cho Seller đang được phát triển.");
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                errorMessageLabel.setText("Lỗi: Không thể tải màn hình tiếp theo.");
+            }
         } else {
             errorMessageLabel.setText("Tên đăng nhập hoặc mật khẩu không đúng.");
         }
